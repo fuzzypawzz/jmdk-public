@@ -21,10 +21,10 @@ export function useThemeLogic(args?: {
         throw new Error(`Toggle checkbox with ID ${themeToggleId} not found`);
       }
 
-      toggleCheckbox.checked = logic.getPreferredTheme() === 'dark';
+      toggleCheckbox.checked = this.getPreferredTheme() === 'dark';
 
       toggleCheckbox.addEventListener('click', () => {
-        logic.applyTheme(toggleCheckbox.checked ? 'dark' : 'light');
+        this.applyTheme(toggleCheckbox.checked ? 'dark' : 'light');
       });
     },
 
