@@ -11,38 +11,36 @@ export function useThemeLogic(args?: {
   const matchMedia =
     args?.matchMedia ?? ((query: string) => window.matchMedia(query));
 
-  return {
-    attachListeners() {
-      const toggleCheckbox = document.getElementById(
-        themeToggleId,
-      ) as HTMLInputElement | null;
+  function applyTheme(theme: Theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    storage.setItem('theme', theme);
+  }
 
-      if (!toggleCheckbox) {
-        throw new Error(`Toggle checkbox with ID ${themeToggleId} not found`);
-      }
+  function getPreferredTheme(): Theme {
+    const preferredTheme = storage.getItem('theme');
 
-      toggleCheckbox.checked = this.getPreferredTheme() === 'dark';
+    if (preferredTheme === 'light' || preferredTheme === 'dark') {
+      return preferredTheme;
+    }
 
-      toggleCheckbox.addEventListener('click', () => {
-        this.applyTheme(toggleCheckbox.checked ? 'dark' : 'light');
-      });
-    },
+    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
 
-    applyTheme(theme: Theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      storage.setItem('theme', theme);
-    },
+  function attachListeners() {
+    const toggleCheckbox = document.getElementById(
+      themeToggleId,
+    ) as HTMLInputElement | null;
 
-    getPreferredTheme(): Theme {
-      const preferredTheme = storage.getItem('theme');
+    if (!toggleCheckbox) {
+      throw new Error(`Toggle checkbox with ID ${themeToggleId} not found`);
+    }
 
-      if (preferredTheme === 'light' || preferredTheme === 'dark') {
-        return preferredTheme;
-      }
+    toggleCheckbox.checked = getPreferredTheme() === 'dark';
 
-      return matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
-    },
-  };
+    toggleCheckbox.addEventListener('click', () => {
+      applyTheme(toggleCheckbox.checked ? 'dark' : 'light');
+    });
+  }
+
+  return { attachListeners, applyTheme, getPreferredTheme };
 }
