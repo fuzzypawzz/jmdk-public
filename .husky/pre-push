@@ -1,1 +1,1 @@
-npm run e2e
+npm run check && npm run e2e
