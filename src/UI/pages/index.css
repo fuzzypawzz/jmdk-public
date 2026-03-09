@@ -42,7 +42,7 @@
 
 .home-view__handle {
   font-family: var(--jmdk-font-family-alternative);
-  color: var(--jmdk-color-dark-500);
+  color: var(--jmdk-color-scheme-text-muted);
   font-size: 14px;
   margin-top: 4px;
   display: flex;
@@ -64,7 +64,7 @@
 }
 
 .home-view__hashtag-list {
-  color: var(--jmdk-color-dark-500);
+  color: var(--jmdk-color-scheme-text-muted);
   margin-top: 16px;
   line-height: normal;
   font-size: 14px;
@@ -88,7 +88,7 @@
 }
 
 .home-view__hash {
-  color: var(--jmdk-color-grey-800);
+  color: var(--jmdk-color-scheme-text-subtle);
   margin-right: 2px;
 }
 

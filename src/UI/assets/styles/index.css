@@ -1,20 +1,43 @@
 :root {
+  /* Layout */
   --jmdk-nav-height: calc(var(--jmdk-site-wrapper-padding-y) + var(--jmdk-site-wrapper-padding-x));
   --jmdk-site-wrapper-padding-y: 24px;
   --jmdk-site-wrapper-padding-x: 32px;
+
+  /* Palette */
   --jmdk-color-grey-100: #fbfbfb;
   --jmdk-color-grey-800: #aaaaaa;
   --jmdk-color-blue-200: #b2cbe2;
   --jmdk-color-orange-500: #fa7725;
   --jmdk-color-orange-800: #e34837;
   --jmdk-color-dark-500: #353535;
-  --jmdk-color-scheme-primary: var(--jmdk-color-blue-200);
-  --jmdk-color-scheme-secondary: var(--jmdk-color-orange-500);
+
+  /* Typography */
   --jmdk-font-family: 'Inria Sans', system-ui, -apple-system, blinkmacsystemfont,
     'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
   --jmdk-font-family-alternative: 'Neucha', monospace, system-ui,
     blinkmacsystemfont, 'Roboto';
+
+  /* Theme — light */
+  color-scheme: light dark;
+  --jmdk-color-scheme-background: var(--jmdk-color-grey-100);
+  --jmdk-color-scheme-primary: var(--jmdk-color-blue-200);
+  --jmdk-color-scheme-secondary: var(--jmdk-color-orange-500);
+  --jmdk-color-scheme-text: #1c1c20;
+  --jmdk-color-scheme-text-muted: #4e4b48;
+  --jmdk-color-scheme-text-subtle: #9a9692;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --jmdk-color-scheme-background: #18181b;
+    --jmdk-color-scheme-primary: #9dbdd9;
+    --jmdk-color-scheme-secondary: #ff8c42;
+    --jmdk-color-scheme-text: #e4e0d9;
+    --jmdk-color-scheme-text-muted: #a8a49e;
+    --jmdk-color-scheme-text-subtle: #5a5754;
+  }
 }
 
 * {
@@ -22,7 +45,8 @@
 }
 
 html {
-  background-color: var(--jmdk-color-grey-100);
+  background-color: var(--jmdk-color-scheme-background);
+  color: var(--jmdk-color-scheme-text);
 }
 
 .app__wrapper {
