@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f0f6e118-d0e4-470c-a328-d1a3c6aaca3f/deploy-status?branch=main)](https://app.netlify.com/sites/jmdk/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f0f6e118-d0e4-470c-a328-d1a3c6aaca3f/deploy-status)](https://app.netlify.com/projects/jmdk/deploys)
 
 # JMDK - jannikmaag.dk
 
