@@ -11,7 +11,7 @@ export function useThemeLogic(args?: {
   const matchMedia =
     args?.matchMedia ?? ((query: string) => window.matchMedia(query));
 
-  const logic = {
+  return {
     attachListeners() {
       const toggleCheckbox = document.getElementById(
         themeToggleId,
@@ -45,6 +45,4 @@ export function useThemeLogic(args?: {
         : 'light';
     },
   };
-
-  return logic;
 }
