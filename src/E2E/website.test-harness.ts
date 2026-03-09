@@ -2,10 +2,10 @@ import { type Page, expect } from '@playwright/test';
 import { indexContent as content } from '../UI/pages/index.content';
 
 export class WebsiteTestHarness {
-  readonly page;
-  readonly mainPageHeading;
-  readonly githubButton;
-  readonly linkedInButton;
+  private readonly page;
+  private readonly mainPageHeading;
+  private readonly githubButton;
+  private readonly linkedInButton;
 
   constructor(page: Page) {
     this.page = page;
