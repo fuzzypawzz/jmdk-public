@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;700&family=Neucha&display=swap');
+
+:root {
+  --jmdk-nav-height: calc(var(--jmdk-site-wrapper-padding-y) + var(--jmdk-site-wrapper-padding-x));
+  --jmdk-site-wrapper-padding-y: 24px;
+  --jmdk-site-wrapper-padding-x: 32px;
+  --jmdk-color-grey-100: #fbfbfb;
+  --jmdk-color-grey-800: #aaaaaa;
+  --jmdk-color-blue-200: #b2cbe2;
+  --jmdk-color-orange-500: #fa7725;
+  --jmdk-color-orange-800: #e34837;
+  --jmdk-color-dark-500: #353535;
+  --jmdk-color-scheme-primary: var(--jmdk-color-blue-200);
+  --jmdk-color-scheme-secondary: var(--jmdk-color-orange-500);
+  --jmdk-font-family: 'Inria Sans', system-ui, -apple-system, blinkmacsystemfont,
+    'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  --jmdk-font-family-alternative: 'Neucha', monospace, system-ui,
+    blinkmacsystemfont, 'Roboto';
+}
+
+* {
+  font-family: var(--jmdk-font-family);
+}
+
+html {
+  background-color: var(--jmdk-color-grey-100);
+}
+
+.app__wrapper {
+  padding: var(--jmdk-site-wrapper-padding-y) var(--jmdk-site-wrapper-padding-x);
+}
+
+.app__header {
+  font-family: var(--jmdk-font-family);
+  font-weight: 700;
+  font-size: 24px;
+  position: fixed;
+
+  @media (min-width: 769px) {
+    font-size: 28px;
+  }
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.jmdk-button {
+  box-shadow: #094c66 4px 4px 0px;
+  border-radius: 6px;
+  padding: 10px 12px;
+  border: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  min-width: 120px;
+  transition:
+    transform 200ms,
+    box-shadow 200ms;
+  cursor: pointer;
+}
+
+.jmdk-button:active {
+  transform: translateY(4px) translateX(4px);
+  box-shadow: #094c66 0px 0px 0px;
+}
+
+.jmdk-button--primary {
+  background-color: var(--jmdk-color-scheme-primary);
+  color: var(--jmdk-color-dark-500);
+}
+
+.jmdk-button--secondary {
+  background-color: var(--jmdk-color-scheme-secondary);
+  color: white;
+}

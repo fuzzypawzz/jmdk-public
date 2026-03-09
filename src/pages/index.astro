@@ -1,11 +1,89 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import './index.css';
 ---
 
 <Layout>
-	<Welcome />
+  <div class="app__wrapper">
+    <header class="app__header no-select">JMDK</header>
+
+    <main class="home-view">
+      <section>
+        <div class="home-view__heading-wrapper">
+          <h1 class="home-view__heading">
+            <span>Jannik Maag</span><span
+              class="home-view__heading-dot no-select">.</span
+            >
+          </h1>
+
+          <p class="home-view__handle">@fuzzypawzz on GitHub</p>
+        </div>
+
+        <p class="home-view__about-me">
+          Senior Web developer.<br />
+          Passionate about Front-End architecture.<br />
+          Freelancer.<br />
+          A human being.
+        </p>
+
+        <button
+          title="Browse @fuzzypawzz on GitHub"
+          class="home-view__button jmdk-button jmdk-button--secondary"
+          onclick="window.open('https://github.com/fuzzypawzz', '_blank')"
+        >
+          My GitHub
+        </button>
+
+        <button
+          title="Visit Janniks LinkedIn profile"
+          class="home-view__button jmdk-button jmdk-button--secondary"
+          onclick="window.open('https://dk.linkedin.com/in/jannikmaag', '_blank')"
+        >
+          My profile on LinkedIn
+        </button>
+
+        <button
+          title="Discover the Storybook of this website"
+          class="home-view__button jmdk-button jmdk-button--secondary"
+          onclick="window.open('https://jmdkstorybook.netlify.app', '_blank')"
+        >
+          Storybook
+        </button>
+
+        <ul class="home-view__hashtag-list">
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>TypeScript
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>Vue.js
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>React
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>Swift
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>ASP.NET
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>Flutter
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>EPIServer/Optimizely
+          </li>
+
+          <li class="home-view__hashtag-list-item">
+            <span class="home-view__hash no-select">#</span>MS Azure
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
 </Layout>
