@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;700&family=Neucha&display=swap');
-
 :root {
   --jmdk-nav-height: calc(var(--jmdk-site-wrapper-padding-y) + var(--jmdk-site-wrapper-padding-x));
   --jmdk-site-wrapper-padding-y: 24px;
