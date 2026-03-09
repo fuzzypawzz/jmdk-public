@@ -1,5 +1,6 @@
 ---
 import { layoutContent as content } from './layout.content';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import '../assets/styles/index.css';
 import '../assets/styles/css-reset.css';
 ---
@@ -21,8 +22,22 @@ import '../assets/styles/css-reset.css';
     <title>{content.siteTitle}</title>
   </head>
   <body>
+    <script is:inline>
+      (function () {
+        const preferredTheme = localStorage.getItem('theme');
+
+        if (preferredTheme === 'light' || preferredTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', preferredTheme);
+        }
+      })();
+    </script>
+
     <div class="app__wrapper">
-      <header class="app__header no-select">{content.header}</header>
+      <header class="app__header no-select">
+        {content.header}
+
+        <ThemeToggle />
+      </header>
       <slot />
     </div>
     <script>
