@@ -11,8 +11,8 @@
     "check": "astro check",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest",
+    "test:nowatch": "vitest run",
     "prepare": "husky"
   },
   "dependencies": {

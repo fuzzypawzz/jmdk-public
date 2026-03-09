@@ -1,0 +1,38 @@
+---
+import { themeToggleId } from './theme';
+---
+
+<label class="theme-toggle" title="Toggle theme">
+  <input type="checkbox" id={themeToggleId} />
+  <span class="theme-toggle-sr">Toggle theme</span>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    width="1em"
+    height="1em"
+    fill="currentColor"
+    class="theme-toggle__around"
+    viewBox="0 0 32 32"
+  >
+    <clipPath id="theme-toggle__around__cutout">
+      <path d="M0 0h42v30a1 1 0 00-16 13H0Z"></path>
+    </clipPath>
+    <g clip-path="url(#theme-toggle__around__cutout)">
+      <circle cx="16" cy="16" r="8.4"></circle>
+      <g>
+        <circle cx="16" cy="3.3" r="2.3"></circle>
+        <circle cx="27" cy="9.7" r="2.3"></circle>
+        <circle cx="27" cy="22.3" r="2.3"></circle>
+        <circle cx="16" cy="28.7" r="2.3"></circle>
+        <circle cx="5" cy="22.3" r="2.3"></circle>
+        <circle cx="5" cy="9.7" r="2.3"></circle>
+      </g>
+    </g>
+  </svg>
+</label>
+
+<script>
+  import { useThemeLogic } from './theme';
+
+  useThemeLogic().attachListeners();
+</script>
