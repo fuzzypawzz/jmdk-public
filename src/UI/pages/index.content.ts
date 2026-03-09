@@ -1,5 +1,4 @@
 export const indexContent = Object.freeze({
-  header: 'JMDK',
   heading: {
     text: 'Jannik Maag',
     dot: '.',

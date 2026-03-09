@@ -5,57 +5,53 @@ import './index.css';
 ---
 
 <Layout>
-  <div class="app__wrapper">
-    <header class="app__header no-select">{content.header}</header>
+  <main class="home-view">
+    <section>
+      <div class="home-view__heading-wrapper">
+        <h1 class="home-view__heading">
+          <span>{content.heading.text}</span>
 
-    <main class="home-view">
-      <section>
-        <div class="home-view__heading-wrapper">
-          <h1 class="home-view__heading">
-            <span>{content.heading.text}</span>
+          <span class="home-view__heading-dot no-select">
+            {content.heading.dot}
+          </span>
+        </h1>
 
-            <span class="home-view__heading-dot no-select">
-              {content.heading.dot}
-            </span>
-          </h1>
+        <p class="home-view__handle">{content.handle}</p>
+      </div>
 
-          <p class="home-view__handle">{content.handle}</p>
-        </div>
-
-        <p class="home-view__about-me">
-          {
-            content.aboutLines.map((lineOfText) => (
-              <>
-                {lineOfText}
-                <br />
-              </>
-            ))
-          }
-        </p>
-
+      <p class="home-view__about-me">
         {
-          content.buttons.map((button) => (
-            <button
-              title={button.title}
-              class="home-view__button jmdk-button jmdk-button--secondary"
-              onclick={`window.open('${button.url}', '_blank')`}
-            >
-              {button.label}
-            </button>
+          content.aboutLines.map((lineOfText) => (
+            <>
+              {lineOfText}
+              <br />
+            </>
           ))
         }
+      </p>
 
-        <ul class="home-view__hashtag-list">
-          {
-            content.hashtags.map((hashtag) => (
-              <li class="home-view__hashtag-list-item">
-                <span class="home-view__hash no-select">#</span>
-                {hashtag}
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-    </main>
-  </div>
+      {
+        content.buttons.map((button) => (
+          <button
+            title={button.title}
+            class="home-view__button jmdk-button jmdk-button--secondary"
+            onclick={`window.open('${button.url}', '_blank')`}
+          >
+            {button.label}
+          </button>
+        ))
+      }
+
+      <ul class="home-view__hashtag-list">
+        {
+          content.hashtags.map((hashtag) => (
+            <li class="home-view__hashtag-list-item">
+              <span class="home-view__hash no-select">#</span>
+              {hashtag}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
 </Layout>

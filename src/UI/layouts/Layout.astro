@@ -1,4 +1,5 @@
 ---
+import { layoutContent as content } from './layout.content';
 import '../assets/styles/index.css';
 import '../assets/styles/css-reset.css';
 ---
@@ -8,11 +9,7 @@ import '../assets/styles/css-reset.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Jannik Maag is a Senior Software Engineer and Front-End architect.
-      He specialises in writing testable framework agnostic solutions at scale."
-    />
+    <meta name="description" content={content.metaDescription} />
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,13 +18,16 @@ import '../assets/styles/css-reset.css';
       rel="stylesheet"
     />
     <link rel="icon" href="/favicon.ico" />
-    <title>Jannik Maag</title>
+    <title>{content.siteTitle}</title>
   </head>
   <body>
+    <div class="app__wrapper">
+      <header class="app__header no-select">{content.header}</header>
+      <slot />
+    </div>
     <script>
       import { useWindowHeightVariable } from '../assets/scripts/window-height-variable';
       useWindowHeightVariable();
     </script>
-    <slot />
   </body>
 </html>
