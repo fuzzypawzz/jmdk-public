@@ -4,11 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:e2e": "astro dev --port 5183",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "astro": "^5.17.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
   }
 }
