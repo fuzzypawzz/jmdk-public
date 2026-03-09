@@ -1,5 +1,6 @@
 ---
 import { layoutContent as content } from './layout.content';
+import ThemeToggle from '../components/theme-toggle/ThemeToggle.astro';
 import '../assets/styles/index.css';
 import '../assets/styles/css-reset.css';
 ---
@@ -14,6 +15,10 @@ import '../assets/styles/css-reset.css';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/around.min.css"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;700&family=Neucha&display=swap"
       rel="stylesheet"
     />
@@ -21,8 +26,22 @@ import '../assets/styles/css-reset.css';
     <title>{content.siteTitle}</title>
   </head>
   <body>
+    <script is:inline>
+      (function () {
+        const preferredTheme = localStorage.getItem('theme');
+
+        if (preferredTheme === 'light' || preferredTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', preferredTheme);
+        }
+      })();
+    </script>
+
     <div class="app__wrapper">
-      <header class="app__header no-select">{content.header}</header>
+      <header class="app__header no-select">
+        <span>{content.header}</span>
+
+        <ThemeToggle />
+      </header>
       <slot />
     </div>
     <script>

@@ -30,7 +30,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --jmdk-color-scheme-background: #18181b;
     --jmdk-color-scheme-primary: #9dbdd9;
     --jmdk-color-scheme-secondary: #ff8c42;
@@ -38,6 +38,15 @@
     --jmdk-color-scheme-text-muted: #a8a49e;
     --jmdk-color-scheme-text-subtle: #5a5754;
   }
+}
+
+:root[data-theme='dark'] {
+  --jmdk-color-scheme-background: #18181b;
+  --jmdk-color-scheme-primary: #9dbdd9;
+  --jmdk-color-scheme-secondary: #ff8c42;
+  --jmdk-color-scheme-text: #e4e0d9;
+  --jmdk-color-scheme-text-muted: #a8a49e;
+  --jmdk-color-scheme-text-subtle: #5a5754;
 }
 
 * {
@@ -58,11 +67,19 @@ html {
   font-weight: 700;
   font-size: 24px;
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--jmdk-site-wrapper-padding-y) var(--jmdk-site-wrapper-padding-x);
 
   @media (min-width: 769px) {
     font-size: 28px;
   }
 }
+
 
 .no-select {
   -webkit-touch-callout: none;
