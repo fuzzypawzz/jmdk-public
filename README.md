@@ -1,46 +1,54 @@
-# Astro Starter Kit: Basics
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f0f6e118-d0e4-470c-a328-d1a3c6aaca3f/deploy-status?branch=main)](https://app.netlify.com/sites/jmdk/deploys)
+
+# JMDK - jannikmaag.dk
+
+Jannik Maag's professional website.
+
+## Directory
+
+The source code is found in the src directory.
+
+### Styling
+
+The styles are located inside the assets folder.
+
+The project is following the [BEM - Block Element Modifier](https://getbem.com/) methodology.
+
+### Testing
+
+You will find the end to end tests in the `src/E2E` directory.
+
+Vitest test suites are named `some-unit.test.ts`.
+
+E2E test suites are named `some-page.spec.ts`.
+
+## Project Setup
 
 ```sh
-npm create astro@latest -- --template basics
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Compile and Hot-Reload for Development
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+npm run dev
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Run tests
 
-## 🧞 Commands
+```sh
+npm run test
+```
 
-All commands are run from the root of the project, from a terminal:
+### Run E2E tests
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+npm run e2e
+npm run e2e:ui
+```
 
-## 👀 Want to learn more?
+### Type-Check, Compile and Minify for Production
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+npm run build
+```
