@@ -1,19 +1,20 @@
 import { type Page, expect } from '@playwright/test';
+import { indexContent as content } from '../UI/pages/index.content';
 
 export class WebsiteTestHarness {
   readonly page;
   readonly mainPageHeading;
   readonly githubButton;
   readonly linkedInButton;
-  readonly storybookButton;
 
   constructor(page: Page) {
     this.page = page;
-    this.mainPageHeading = page.getByText('Jannik Maag');
-    this.githubButton = page.getByRole('button', { name: 'My GitHub' });
-    this.storybookButton = page.getByRole('button', { name: 'Storybook' });
+    this.mainPageHeading = page.getByText(content.heading.text);
+    this.githubButton = page.getByRole('button', {
+      name: content.buttons[0].label,
+    });
     this.linkedInButton = page.getByRole('button', {
-      name: 'My profile on LinkedIn',
+      name: content.buttons[1].label,
     });
   }
 
@@ -27,10 +28,6 @@ export class WebsiteTestHarness {
 
   async clickOnGitHub() {
     await this.githubButton.click();
-  }
-
-  async clickOnStorybook() {
-    await this.storybookButton.click();
   }
 
   async clickOnLinkedIn() {

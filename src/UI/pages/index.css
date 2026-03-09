@@ -10,6 +10,8 @@
 }
 
 .home-view__heading {
+  display: flex;
+  align-items: baseline;
   font-weight: 700;
   font-size: 40px;
   text-transform: uppercase;
@@ -75,11 +77,12 @@
 }
 
 .home-view__hashtag-list-item {
-  display: inline-block;
+  display: inline-flex;
+  align-items: baseline;
   margin: 0 4px 2px 0;
 
   @media (min-width: 769px) {
-    display: block;
+    display: flex;
     margin: 0 0 2px 0;
   }
 }

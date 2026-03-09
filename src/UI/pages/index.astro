@@ -1,83 +1,59 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { indexContent as content } from './index.content';
 import './index.css';
 ---
 
 <Layout>
   <div class="app__wrapper">
-    <header class="app__header no-select">JMDK</header>
+    <header class="app__header no-select">{content.header}</header>
 
     <main class="home-view">
       <section>
         <div class="home-view__heading-wrapper">
           <h1 class="home-view__heading">
-            <span>Jannik Maag</span><span
-              class="home-view__heading-dot no-select">.</span
-            >
+            <span>{content.heading.text}</span>
+
+            <span class="home-view__heading-dot no-select">
+              {content.heading.dot}
+            </span>
           </h1>
 
-          <p class="home-view__handle">@fuzzypawzz on GitHub</p>
+          <p class="home-view__handle">{content.handle}</p>
         </div>
 
         <p class="home-view__about-me">
-          Senior Software Engineer.<br />
-          Passionate about Front-End architecture.<br />
-          Freelancer.<br />
-          A human being.
+          {
+            content.aboutLines.map((lineOfText) => (
+              <>
+                {lineOfText}
+                <br />
+              </>
+            ))
+          }
         </p>
 
-        <button
-          title="Browse @fuzzypawzz on GitHub"
-          class="home-view__button jmdk-button jmdk-button--secondary"
-          onclick="window.open('https://github.com/fuzzypawzz', '_blank')"
-        >
-          My GitHub
-        </button>
-
-        <button
-          title="Visit Janniks LinkedIn profile"
-          class="home-view__button jmdk-button jmdk-button--secondary"
-          onclick="window.open('https://dk.linkedin.com/in/jannikmaag', '_blank')"
-        >
-          My profile on LinkedIn
-        </button>
+        {
+          content.buttons.map((button) => (
+            <button
+              title={button.title}
+              class="home-view__button jmdk-button jmdk-button--secondary"
+              onclick={`window.open('${button.url}', '_blank')`}
+            >
+              {button.label}
+            </button>
+          ))
+        }
 
         <ul class="home-view__hashtag-list">
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>TypeScript
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>Vue.js
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>React
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>SolidJS
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>Svelte
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>Playwright/Vitest
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>Swift
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>ASP.NET
-          </li>
-
-          <li class="home-view__hashtag-list-item">
-            <span class="home-view__hash no-select">#</span>Claude Code
-          </li>
+          {
+            content.hashtags.map((hashtag) => (
+              <li class="home-view__hashtag-list-item">
+                <span class="home-view__hash no-select">#</span>
+                {hashtag}
+              </li>
+            ))
+          }
         </ul>
       </section>
     </main>
