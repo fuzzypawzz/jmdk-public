@@ -22,6 +22,7 @@ export default defineConfig({
     {
       command: 'npm run dev:e2e',
       url: 'http://localhost:5183/',
+      reuseExistingServer: true,
     },
   ],
 });

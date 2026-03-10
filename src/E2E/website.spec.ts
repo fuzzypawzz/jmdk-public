@@ -1,4 +1,5 @@
 import { WebsiteTestHarness } from './website.test-harness';
+import { ThemeToggleTestHarness } from '../UI/components/theme-toggle/theme-toggle.test-harness';
 import { test } from 'playwright/test';
 
 test('smoke test', async ({ page }) => {
@@ -29,5 +30,32 @@ test.describe('front page navigation', () => {
     await site.goToRoot();
     await site.clickOnLinkedIn();
     await browserTab.isOnLinkedInFrontPage();
+  });
+});
+
+test.describe('darkmode/lightmode toggling', () => {
+  test.use({ colorScheme: 'light' });
+
+  test('system theme preference always overrides user-set theme for good UX, starting with lightmode', async ({
+    page,
+  }) => {
+    const site = new WebsiteTestHarness(page);
+    const themeToggle = new ThemeToggleTestHarness(page);
+
+    await site.goToRoot();
+    // Initially light
+    await themeToggle.hasTheme('light');
+
+    // User switches to dark using the toggle
+    await page.getByTitle('Toggle theme').click();
+    await themeToggle.hasTheme('dark');
+
+    // Users system changes to dark
+    await themeToggle.emulateSystemTheme('dark');
+    await themeToggle.hasTheme('dark');
+
+    // Users system changes to light, overriding what user has previously set using the toggle
+    await themeToggle.emulateSystemTheme('light');
+    await themeToggle.hasTheme('light');
   });
 });
