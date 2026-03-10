@@ -44,10 +44,6 @@ export function useThemeLogic(args?: {
       set(value: Theme) {
         return storage.setItem(key, value);
       },
-
-      clear() {
-        return storage.removeItem(key);
-      },
     };
   })();
 
