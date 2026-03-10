@@ -1,11 +1,11 @@
-type Theme = 'light' | 'dark';
 export const themeToggleId = 'theme-toggle';
 
 export function useThemeLogic(args?: {
   document?: Document;
-  storage?: Pick<Storage, 'getItem' | 'setItem'>;
+  storage?: Storage;
   matchMedia?: (query: string) => { matches: boolean };
 }) {
+  type Theme = 'light' | 'dark';
   const document = args?.document ?? window.document;
   const storage = args?.storage ?? localStorage;
   const matchMedia =
@@ -13,20 +13,15 @@ export function useThemeLogic(args?: {
 
   function applyTheme(theme: Theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    storage.setItem('theme', theme);
+    themeStorage.set(theme);
+    getToggleCheckbox().checked = theme === 'dark';
   }
 
-  function getPreferredTheme(): Theme {
-    const preferredTheme = storage.getItem('theme');
-
-    if (preferredTheme === 'light' || preferredTheme === 'dark') {
-      return preferredTheme;
-    }
-
-    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  function prefersDarkColorSchemeQuery() {
+    return matchMedia('(prefers-color-scheme: dark)');
   }
 
-  function attachListeners() {
+  function getToggleCheckbox() {
     const toggleCheckbox = document.getElementById(
       themeToggleId,
     ) as HTMLInputElement | null;
@@ -35,12 +30,77 @@ export function useThemeLogic(args?: {
       throw new Error(`Toggle checkbox with ID ${themeToggleId} not found`);
     }
 
-    toggleCheckbox.checked = getPreferredTheme() === 'dark';
+    return toggleCheckbox;
+  }
 
-    toggleCheckbox.addEventListener('click', () => {
-      applyTheme(toggleCheckbox.checked ? 'dark' : 'light');
+  const themeStorage = (function () {
+    const key = 'theme';
+
+    return {
+      get() {
+        return storage.getItem(key);
+      },
+
+      set(value: Theme) {
+        return storage.setItem(key, value);
+      },
+
+      clear() {
+        return storage.removeItem(key);
+      },
+    };
+  })();
+
+  function getPreferredTheme(): Theme {
+    const preferredTheme = themeStorage.get();
+
+    if (preferredTheme === 'light' || preferredTheme === 'dark') {
+      return preferredTheme;
+    }
+
+    return prefersDarkColorSchemeQuery().matches ? 'dark' : 'light';
+  }
+
+  function syncWithOS() {
+    const isDark = prefersDarkColorSchemeQuery().matches;
+
+    applyTheme(isDark ? 'dark' : 'light');
+  }
+
+  function syncOnVisibilityChange() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible') return;
+
+      const hasUserOverwrittenTheme = !!themeStorage.get();
+
+      if (hasUserOverwrittenTheme) return;
+
+      syncWithOS();
     });
   }
 
-  return { attachListeners, applyTheme, getPreferredTheme };
+  function syncOnMediaQueryChange() {
+    const mediaQuery = prefersDarkColorSchemeQuery();
+
+    if ('addEventListener' in mediaQuery) {
+      mediaQuery.addEventListener('change', syncWithOS);
+    }
+  }
+
+  function syncOnToggleChange() {
+    const toggleCheckbox = getToggleCheckbox();
+
+    toggleCheckbox.addEventListener('click', () =>
+      applyTheme(toggleCheckbox.checked ? 'dark' : 'light'),
+    );
+  }
+
+  function setup() {
+    applyTheme(getPreferredTheme());
+    syncOnVisibilityChange();
+    syncOnToggleChange();
+    syncOnMediaQueryChange();
+  }
+
+  return { setup, applyTheme, getPreferredTheme };
 }

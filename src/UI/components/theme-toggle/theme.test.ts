@@ -6,11 +6,15 @@ it('throws when button ID does not exist in the DOM', () => {
     getElementById() {
       return undefined;
     },
+    documentElement: window.document.documentElement,
+    addEventListener: () => {},
   } as unknown as Document;
+  const storage = createMockStorage();
+  const matchMedia = createMatchMedia(false);
 
-  const { attachListeners } = useThemeLogic({ document });
+  const { setup } = useThemeLogic({ document, storage, matchMedia });
 
-  expect(() => attachListeners()).toThrowError(
+  expect(() => setup()).toThrowError(
     `Toggle checkbox with ID theme-toggle not found`,
   );
 });
@@ -23,22 +27,25 @@ it('attaches listeners to the button', () => {
       element.id = id;
       return element;
     },
+    documentElement: window.document.documentElement,
+    addEventListener: () => {},
   } as unknown as Document;
   const storage = createMockStorage();
   const matchMedia = createMatchMedia(false);
 
-  const { attachListeners } = useThemeLogic({ document, storage, matchMedia });
+  const { setup } = useThemeLogic({ document, storage, matchMedia });
 
   // expect not to throw
-  expect(() => attachListeners()).not.toThrow();
+  expect(() => setup()).not.toThrow();
 });
 
 it('applies light theme on click when dark is saved in localStorage', () => {
   const { mockDocument, toggleButton } = createMockDocument();
   const storage = createMockStorage({ theme: 'dark' });
+  const matchMedia = createMatchMedia(false);
 
-  const logic = useThemeLogic({ document: mockDocument, storage });
-  logic.attachListeners();
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
   toggleButton.click();
 
   expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('light');
@@ -48,9 +55,10 @@ it('applies light theme on click when dark is saved in localStorage', () => {
 it('applies dark theme on click when light is saved in localStorage', () => {
   const { mockDocument, toggleButton } = createMockDocument();
   const storage = createMockStorage({ theme: 'light' });
+  const matchMedia = createMatchMedia(false);
 
-  const logic = useThemeLogic({ document: mockDocument, storage });
-  logic.attachListeners();
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
   toggleButton.click();
 
   expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('dark');
@@ -100,9 +108,10 @@ it('persists the applied theme to localStorage', () => {
 it('toggles theme back and forth on repeated clicks', () => {
   const { mockDocument, toggleButton } = createMockDocument();
   const storage = createMockStorage({ theme: 'dark' });
+  const matchMedia = createMatchMedia(false);
 
-  const logic = useThemeLogic({ document: mockDocument, storage });
-  logic.attachListeners();
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
 
   toggleButton.click();
   expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('light');
@@ -119,6 +128,7 @@ function createMockDocument() {
   const mockDocument = {
     getElementById: (_id: string) => toggleButton,
     documentElement: window.document.documentElement,
+    addEventListener: () => {},
   } as unknown as Document;
 
   return { mockDocument, toggleButton };
@@ -132,9 +142,88 @@ function createMockStorage(initial: Record<string, string> = {}) {
       _store[key] = value;
     },
     _store,
-  };
+  } as unknown as Storage;
 }
 
+it('overwrites user-set theme when OS preference changes', () => {
+  const { mockDocument } = createMockDocument();
+  // The user manually sets dark theme
+  const storage = createMockStorage({ theme: 'dark' });
+  // The system currently prefers light theme
+  const matchMedia = createMatchMedia(false);
+
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
+
+  // Confirm user override is applied
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  expect(storage._store.theme).toBe('dark');
+
+  // The system preference changes to dark which should overwrite the user's stored preference
+  matchMedia._fireChange(true);
+
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+});
+
+it('overwrites user-set dark theme when OS switches to light', () => {
+  const { mockDocument } = createMockDocument();
+  // The user manually set dark theme
+  const storage = createMockStorage({ theme: 'dark' });
+  // The system currently prefers dark theme
+  const matchMedia = createMatchMedia(true);
+
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
+
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+
+  // The system preference switches to light which should overwrite the user's stored preference
+  matchMedia._fireChange(false);
+
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  expect(storage._store.theme).toBe('light');
+});
+
+it('overwrites user-set light theme when OS switches to dark', () => {
+  const { mockDocument } = createMockDocument();
+  // The user manually set light theme
+  const storage = createMockStorage({ theme: 'light' });
+  // The system currently prefers light theme
+  const matchMedia = createMatchMedia(false);
+
+  const logic = useThemeLogic({ document: mockDocument, storage, matchMedia });
+  logic.setup();
+
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('light');
+
+  // The system preference switches to dark which should overwrite the user's stored preference
+  matchMedia._fireChange(true);
+
+  expect(mockDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  expect(storage._store.theme).toBe('dark');
+});
+
 function createMatchMedia(dark: boolean) {
-  return (_query: string) => ({ matches: dark });
+  let _matches = dark;
+  let _listener: ((e: { matches: boolean }) => void) | null = null;
+
+  const mock = (_query: string) =>
+    ({
+      get matches() {
+        return _matches;
+      },
+      addEventListener(
+        _event: string,
+        listener: (e: { matches: boolean }) => void,
+      ) {
+        _listener = listener;
+      },
+    }) as MediaQueryList;
+
+  mock._fireChange = (newDark: boolean) => {
+    _matches = newDark;
+    _listener?.({ matches: newDark });
+  };
+
+  return mock as any;
 }
