@@ -5,7 +5,7 @@ export const indexContent = Object.freeze({
   },
   handle: '@fuzzypawzz on GitHub',
   aboutLines: [
-    'Senior Software Engineer.',
+    'Experienced Software Engineer',
     'Passionate about Front-End architecture.',
     'Freelancer.',
     'A human being.',
@@ -26,11 +26,12 @@ export const indexContent = Object.freeze({
     'TypeScript',
     'Vue.js',
     'React',
+    'React Native/Expo',
     'SolidJS',
     'Svelte',
     'Playwright/Vitest',
     'Swift',
     'ASP.NET',
-    'Claude Code',
+    'Agentic AI coding (Claude, Codex, Cursor)',
   ],
 });
